@@ -58,7 +58,17 @@ export default function Todo() {
 
   function deleteTask(taskId: number) {
     setTaskList(taskList.filter((t) => t.id !== taskId))
+    const name = taskList.find((t) => t.id === taskId)
+    console.log(name)
     setCount(count - 1)
+    toast.warning(
+      <span>
+        Tarefa <strong>{name?.task}</strong> removido com sucesso
+      </span>,
+      {
+        ...toastConfig,
+      }
+    )
   }
 
   function clearAllTasks() {
