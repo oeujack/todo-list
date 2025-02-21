@@ -38,9 +38,7 @@ export default function Todo() {
       )
     );
     toast.success('Tarefa finalizada!', {
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
+      ...toastConfig
     });
   }
 
@@ -50,6 +48,9 @@ export default function Todo() {
         task.id === id ? { ...task, completed: false } : task
       )
     );
+    toast.warning('Tarefa reaberta', {
+      ...toastConfig
+    });
   }
 
   const validate = Yup.object({
@@ -82,7 +83,7 @@ export default function Todo() {
     const name = taskList.find((t) => t.id === taskId);
     console.log(name);
     setCount(count - 1);
-    toast.warning(
+    toast.error(
       <span>
         Tarefa <strong>{name?.task}</strong> removido com sucesso
       </span>,
