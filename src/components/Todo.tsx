@@ -1,33 +1,55 @@
-import { useState } from 'react'
-import { ITask } from '../Types'
-import * as Yup from 'yup'
-import { Formik } from 'formik'
-import { Modal } from './Modal'
-import { Box, Divider } from '@mui/material'
-import 'nes.css/css/nes.min.css'
-import { toastConfig } from '../utils/toast'
-import { toast } from 'react-toastify'
+import { useState } from 'react';
+import { ITask } from '../Types';
+import * as Yup from 'yup';
+import { Formik } from 'formik';
+import { Modal } from './Modal';
+import { Box, Divider } from '@mui/material';
+import 'nes.css/css/nes.min.css';
+import { toastConfig } from '../utils/toast';
+import { toast } from 'react-toastify';
+import SvgReturn from '../utils/svgReturn';
 
 export default function Todo() {
-  const [count, setCount] = useState<number>(0)
-  const [taskList, setTaskList] = useState<ITask[]>([])
-  const [isOpen, setIsOpen] = useState<boolean>(false)
-  const [selected, setSelected] = useState<ITask | null>(null)
+  const [count, setCount] = useState<number>(0);
+  const [taskList, setTaskList] = useState<ITask[]>([]);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [selected, setSelected] = useState<ITask | null>(null);
 
   function openModal(task: ITask) {
-    setSelected(task)
-    setIsOpen(true)
+    setSelected(task);
+    setIsOpen(true);
   }
 
   function closeModal() {
-    setIsOpen(false)
-    setSelected(null)
+    setIsOpen(false);
+    setSelected(null);
   }
 
   function updateTask(updatedTask: ITask) {
     setTaskList(
       taskList.map((t) => (t.id === updatedTask.id ? updatedTask : t))
-    )
+    );
+  }
+
+  function toggleTaskCompletion(taskId: number) {
+    setTaskList((prevTasks) =>
+      prevTasks.map((t) =>
+        t.id === taskId ? { ...t, completed: !t.completed } : t
+      )
+    );
+    toast.success('Tarefa finalizada!', {
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+    });
+  }
+
+  function reopenTask(id: number) {
+    setTaskList((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === id ? { ...task, completed: false } : task
+      )
+    );
   }
 
   const validate = Yup.object({
@@ -42,24 +64,24 @@ export default function Todo() {
       .required('')
       .trim()
       .test('Tarefa já existe', 'Tarefa já existe', function (value) {
-        const lowerCaseValue = value.toLowerCase()
+        const lowerCaseValue = value.toLowerCase();
         return !taskList
           ?.map((t) => t.task.toLowerCase())
-          .includes(lowerCaseValue)
+          .includes(lowerCaseValue);
       }),
-  })
+  });
 
   function addTask(task: string) {
-    const randomId = (num: number) => Math.floor(Math.random() * num)
-    const newTask = { id: randomId(999), task: task }
-    setTaskList([...taskList, newTask])
+    const randomId = (num: number) => Math.floor(Math.random() * num);
+    const newTask = { id: randomId(999), task: task };
+    setTaskList([...taskList, newTask]);
   }
 
   function deleteTask(taskId: number) {
-    setTaskList(taskList.filter((t) => t.id !== taskId))
-    const name = taskList.find((t) => t.id === taskId)
-    console.log(name)
-    setCount(count - 1)
+    setTaskList(taskList.filter((t) => t.id !== taskId));
+    const name = taskList.find((t) => t.id === taskId);
+    console.log(name);
+    setCount(count - 1);
     toast.warning(
       <span>
         Tarefa <strong>{name?.task}</strong> removido com sucesso
@@ -67,12 +89,12 @@ export default function Todo() {
       {
         ...toastConfig,
       }
-    )
+    );
   }
 
   function clearAllTasks() {
-    setCount(0)
-    setTaskList([])
+    setCount(0);
+    setTaskList([]);
   }
 
   return (
@@ -91,11 +113,11 @@ export default function Todo() {
             {
               ...toastConfig,
             }
-          )
-          actions.resetForm()
-          addTask(values.nameTask)
-          setCount(count + 1)
-          actions.setSubmitting(false)
+          );
+          actions.resetForm();
+          addTask(values.nameTask);
+          setCount(count + 1);
+          actions.setSubmitting(false);
         }}
       >
         {({ ...formik }) => (
@@ -150,28 +172,29 @@ export default function Todo() {
                 </button>
               </Box>
 
-              <Divider sx={{ my: 3 }} />
-
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: 2,
-                }}
-              >
-                {taskList.length >= 1 && (
-                  <button
-                    type="submit"
-                    onClick={() => clearAllTasks()}
-                    className="nes-btn is-warning"
+              {taskList.length >= 1 && (
+                <>
+                  <Divider sx={{ my: 3 }} />
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      gap: 2,
+                    }}
                   >
-                    Limpar tarefas
-                  </button>
-                )}
-                <span>Quantidade de tarefas: {count} </span>
-              </Box>
+                    <button
+                      type="submit"
+                      onClick={() => clearAllTasks()}
+                      className="nes-btn is-warning"
+                    >
+                      Limpar tarefas
+                    </button>
 
+                    <span>Quantidade de tarefas: {count} </span>
+                  </Box>
+                </>
+              )}
               <Box
                 sx={{
                   maxHeight: '400px',
@@ -204,9 +227,19 @@ export default function Todo() {
                         border: '2px solid black',
                         borderRadius: '15px',
                         mt: 2,
-                        gap: 1,
+                        gap: 0,
                       }}
                     >
+                      <label>
+                        <input
+                          type="checkbox"
+                          className="nes-checkbox"
+                          checked={t.completed || false}
+                          onChange={() => toggleTaskCompletion(t.id)}
+                          disabled={t.completed}
+                        />
+                        <span></span>
+                      </label>
                       <Box
                         sx={{
                           flex: 1,
@@ -214,9 +247,16 @@ export default function Todo() {
                           wordBreak: 'break-word',
                         }}
                       >
-                        <span>{t.task}</span>
+                        <span
+                          style={{
+                            textDecoration: t.completed
+                              ? 'line-through'
+                              : 'none',
+                          }}
+                        >
+                          {t.task}
+                        </span>
                       </Box>
-
                       <Box
                         sx={{
                           display: 'flex',
@@ -224,20 +264,41 @@ export default function Todo() {
                           justifyContent: 'center',
                         }}
                       >
-                        <button
-                          type="submit"
-                          className="nes-btn is-primary"
-                          onClick={() => openModal(t)}
-                        >
-                          Editar
-                        </button>
-                        <button
-                          type="submit"
-                          onClick={() => deleteTask(t.id)}
-                          className="nes-btn is-error"
-                        >
-                          X
-                        </button>
+                        {t.completed ? (
+                          <>
+                            <button
+                              type="button"
+                              className="nes-btn is-warning"
+                              onClick={() => reopenTask(t.id)}
+                            >
+                              <SvgReturn />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => deleteTask(t.id)}
+                              className="nes-btn is-error"
+                            >
+                              X
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <button
+                              type="button"
+                              className="nes-btn is-primary"
+                              onClick={() => openModal(t)}
+                            >
+                              Editar
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => deleteTask(t.id)}
+                              className="nes-btn is-error"
+                            >
+                              X
+                            </button>
+                          </>
+                        )}
                       </Box>
                     </Box>
                   </Box>
@@ -256,5 +317,5 @@ export default function Todo() {
         />
       )}
     </>
-  )
+  );
 }
