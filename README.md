@@ -9,6 +9,7 @@ Este é um aplicativo de **Todo List** estilizado com [NES.css](https://nostalgi
 - 🔄 Marcar/desmarcar tarefas como concluídas.
 - ❌ Remover tarefas individualmente ou limpar todas.
 - 📌 Interface retrô inspirada no NES.
+- 💾 Salva tarefas no localStorage do navegador.
 
 ## 🛠️ Tecnologias Utilizadas
 
