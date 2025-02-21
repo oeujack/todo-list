@@ -153,7 +153,7 @@ export default function Todo() {
                       Limpar tarefas
                     </button>
 
-                    <span>Quantidade de tarefas: {count} </span>
+                    <span>Quantidade de tarefas: {taskList.length} </span>
                   </Box>
                 </>
               )}
