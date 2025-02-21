@@ -1,4 +1,4 @@
-# 📋 Todo List com NES.css
+# 📋 Todo List
 
 Este é um aplicativo de **Todo List** estilizado com [NES.css](https://nostalgic-css.github.io/NES.css/), trazendo um visual retrô inspirado em jogos 8-bit.
 
