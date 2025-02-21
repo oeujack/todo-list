@@ -5,10 +5,9 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import type { TaskContextData } from './types';
-import type { ITask } from '../components/Todo/Types';
 import { toast } from 'react-toastify';
 import { toastConfig } from '../utils/toast';
+import type { TaskContextData, ITask } from '../Types';
 
 export const TaskContext = createContext<TaskContextData | undefined>(
   undefined

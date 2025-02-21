@@ -1,5 +1,10 @@
 import type { Dispatch, SetStateAction } from 'react';
-import type { ITask } from '../components/Todo/Types';
+
+export interface ITask {
+  id: number;
+  task: string;
+  completed?: boolean;
+}
 
 export interface TaskContextData {
   taskList: ITask[];

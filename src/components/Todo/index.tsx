@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ITask } from './Types';
+import { ITask } from '../../Types';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { Modal } from './Modal';
