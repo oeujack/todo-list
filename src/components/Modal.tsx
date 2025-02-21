@@ -1,5 +1,4 @@
 import type { ITask } from '../Types'
-import './style.css'
 import { Box, Dialog } from '@mui/material'
 import 'nes.css/css/nes.min.css'
 import { Formik } from 'formik'

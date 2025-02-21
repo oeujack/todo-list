@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { ITask } from '../Types'
 import * as Yup from 'yup'
-import './style.css'
 import { Formik } from 'formik'
 import { Modal } from './Modal'
 import { Box, Divider } from '@mui/material'
