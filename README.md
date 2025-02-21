@@ -47,7 +47,8 @@ Este é um aplicativo de **Todo List** estilizado com [NES.css](https://nostalgi
 
 ## 🎮 Captura de Tela
 
-![Todo List NES.css](https://via.placeholder.com/800x400?text=Adicione+uma+captura+de+tela+aqui)
+![Todo List NES.css](https://github.com/oeujack/todo-list/blob/master/screenshot.png?raw=true)
+
 
 ## 🐙 Contribuição
 
