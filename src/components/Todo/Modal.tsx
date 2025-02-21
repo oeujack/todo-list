@@ -1,10 +1,10 @@
-import type { ITask } from '../Types'
+import type { ITask } from './Types'
 import { Box, Dialog } from '@mui/material'
 import 'nes.css/css/nes.min.css'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { toast } from 'react-toastify'
-import { toastConfig } from '../utils/toast'
+import { toastConfig } from '../../utils/toast'
 
 interface ModalProps {
   open: boolean

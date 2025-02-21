@@ -1,17 +1,27 @@
 import { useState } from 'react';
-import { ITask } from '../Types';
+import { ITask } from './Types';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { Modal } from './Modal';
 import { Box, Divider } from '@mui/material';
 import 'nes.css/css/nes.min.css';
-import { toastConfig } from '../utils/toast';
+import { toastConfig } from '../../utils/toast';
 import { toast } from 'react-toastify';
-import SvgReturn from '../utils/svgReturn';
+import SvgReturn from '../../utils/svgReturn';
+import { useTask } from '../../context/useContextLocalStorage';
 
 export default function Todo() {
+  const {
+    taskList,
+    setTaskList,
+    addTask,
+    deleteTask,
+    reopenTask,
+    toggleTaskCompletion,
+    updateTask,
+  } = useTask();
+
   const [count, setCount] = useState<number>(0);
-  const [taskList, setTaskList] = useState<ITask[]>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState<ITask | null>(null);
 
@@ -23,34 +33,6 @@ export default function Todo() {
   function closeModal() {
     setIsOpen(false);
     setSelected(null);
-  }
-
-  function updateTask(updatedTask: ITask) {
-    setTaskList(
-      taskList.map((t) => (t.id === updatedTask.id ? updatedTask : t))
-    );
-  }
-
-  function toggleTaskCompletion(taskId: number) {
-    setTaskList((prevTasks) =>
-      prevTasks.map((t) =>
-        t.id === taskId ? { ...t, completed: !t.completed } : t
-      )
-    );
-    toast.success('Tarefa finalizada!', {
-      ...toastConfig
-    });
-  }
-
-  function reopenTask(id: number) {
-    setTaskList((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === id ? { ...task, completed: false } : task
-      )
-    );
-    toast.warning('Tarefa reaberta', {
-      ...toastConfig
-    });
   }
 
   const validate = Yup.object({
@@ -71,27 +53,6 @@ export default function Todo() {
           .includes(lowerCaseValue);
       }),
   });
-
-  function addTask(task: string) {
-    const randomId = (num: number) => Math.floor(Math.random() * num);
-    const newTask = { id: randomId(999), task: task };
-    setTaskList([...taskList, newTask]);
-  }
-
-  function deleteTask(taskId: number) {
-    setTaskList(taskList.filter((t) => t.id !== taskId));
-    const name = taskList.find((t) => t.id === taskId);
-    console.log(name);
-    setCount(count - 1);
-    toast.error(
-      <span>
-        Tarefa <strong>{name?.task}</strong> removido com sucesso
-      </span>,
-      {
-        ...toastConfig,
-      }
-    );
-  }
 
   function clearAllTasks() {
     setCount(0);
