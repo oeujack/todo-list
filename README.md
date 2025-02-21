@@ -13,6 +13,7 @@ Este é um aplicativo de **Todo List** estilizado com [NES.css](https://nostalgi
 
 ## 🛠️ Tecnologias Utilizadas
 
+- ⚡ **Vite** (para um ambiente de desenvolvimento rápido)
 - ⚛️ **React** + TypeScript
 - 🎨 **NES.css** (para estilização retrô)
 - 🎭 **Formik + Yup** (para validação de formulários)
