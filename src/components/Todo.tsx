@@ -56,7 +56,7 @@ export default function Todo() {
   const validate = Yup.object({
     nameTask: Yup.string()
       .min(5, '* Quantidade mínima: 5')
-      .max(18, '* Quantidade máxima: 18')
+      .max(35, '* Quantidade máxima: 35')
       .matches(
         // eslint-disable-next-line no-useless-escape
         /^[A-Za-zÀ-ú0-9\s\-]+$/,
@@ -269,7 +269,7 @@ export default function Todo() {
                           <>
                             <button
                               type="button"
-                              className="nes-btn is-warning"
+                              className="nes-btn is-normal"
                               onClick={() => reopenTask(t.id)}
                             >
                               <SvgReturn />

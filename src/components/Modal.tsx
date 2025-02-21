@@ -17,7 +17,7 @@ export function Modal({ open, handleClose, task, updateTask }: ModalProps) {
   const validate = Yup.object({
     nameTask: Yup.string()
       .min(5, '* Quantidade mínima: 5')
-      .max(18, '* Quantidade máxima: 18')
+      .max(35, '* Quantidade máxima: 35')
       .matches(
         // eslint-disable-next-line no-useless-escape
         /^[A-Za-zÀ-ú0-9\s\-]+$/,
