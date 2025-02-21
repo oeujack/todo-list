@@ -220,7 +220,7 @@ export default function Todo() {
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
-                        bgcolor: '#ffffffa8',
+                        bgcolor: t.completed ? 'lightgreen' : '#ffffffa8',
                         flexDirection: { xs: 'column', sm: 'row' },
                         boxShadow: '0px 0px 5px 1px rgba(0, 0, 0, 0.1)',
                         p: 1,
