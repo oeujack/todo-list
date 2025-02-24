@@ -1,14 +1,14 @@
-import { useState } from 'react';
-import { ITask } from '../../Types';
-import * as Yup from 'yup';
-import { Formik } from 'formik';
-import { Modal } from './Modal';
-import { Box, Divider } from '@mui/material';
-import 'nes.css/css/nes.min.css';
-import { toastConfig } from '../../utils/toast';
-import { toast } from 'react-toastify';
-import SvgReturn from '../../utils/svgReturn';
-import { useTask } from '../../context/useContextLocalStorage';
+import { useState } from 'react'
+import { ITask } from '../../Types'
+import * as Yup from 'yup'
+import { Formik } from 'formik'
+import { Modal } from './Modal'
+import { Box, Divider } from '@mui/material'
+import 'nes.css/css/nes.min.css'
+import { toastConfig } from '../../utils/toast'
+import { toast } from 'react-toastify'
+import SvgReturn from '../../utils/svgReturn'
+import { useTask } from '../../context/useContextLocalStorage'
 
 export default function Todo() {
   const {
@@ -19,20 +19,20 @@ export default function Todo() {
     reopenTask,
     toggleTaskCompletion,
     updateTask,
-  } = useTask();
+  } = useTask()
 
-  const [count, setCount] = useState<number>(0);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selected, setSelected] = useState<ITask | null>(null);
+  const [count, setCount] = useState<number>(0)
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [selected, setSelected] = useState<ITask | null>(null)
 
   function openModal(task: ITask) {
-    setSelected(task);
-    setIsOpen(true);
+    setSelected(task)
+    setIsOpen(true)
   }
 
   function closeModal() {
-    setIsOpen(false);
-    setSelected(null);
+    setIsOpen(false)
+    setSelected(null)
   }
 
   const validate = Yup.object({
@@ -47,16 +47,16 @@ export default function Todo() {
       .required('')
       .trim()
       .test('Tarefa já existe', 'Tarefa já existe', function (value) {
-        const lowerCaseValue = value.toLowerCase();
+        const lowerCaseValue = value.toLowerCase()
         return !taskList
           ?.map((t) => t.task.toLowerCase())
-          .includes(lowerCaseValue);
+          .includes(lowerCaseValue)
       }),
-  });
+  })
 
   function clearAllTasks() {
-    setCount(0);
-    setTaskList([]);
+    setCount(0)
+    setTaskList([])
   }
 
   return (
@@ -75,11 +75,11 @@ export default function Todo() {
             {
               ...toastConfig,
             }
-          );
-          actions.resetForm();
-          addTask(values.nameTask);
-          setCount(count + 1);
-          actions.setSubmitting(false);
+          )
+          actions.resetForm()
+          addTask(values.nameTask)
+          setCount(count + 1)
+          actions.setSubmitting(false)
         }}
       >
         {({ ...formik }) => (
@@ -121,6 +121,12 @@ export default function Todo() {
                   value={formik.values.nameTask}
                   onChange={formik.handleChange}
                   style={{ width: '100%', maxWidth: '400px' }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault()
+                      formik.handleSubmit()
+                    }
+                  }}
                 />
                 <span className="nes-text is-error">
                   {formik.errors.nameTask}
@@ -279,5 +285,5 @@ export default function Todo() {
         />
       )}
     </>
-  );
+  )
 }
