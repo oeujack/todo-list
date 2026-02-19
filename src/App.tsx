@@ -1,7 +1,8 @@
-import { Box } from '@mui/material';
-import Todo from './components/Todo';
-import imagemFundo from './assets/imagem.png';
-import { ToastContainer } from 'react-toastify';
+import { Box } from '@mui/material'
+import Todo from './components/Todo'
+import imagemFundo from './assets/imagem.png'
+import { ToastContainer } from 'react-toastify'
+import './App.css'
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
         <Todo />
       </Box>
     </>
-  );
+  )
 }
 
-export default App;
+export default App
