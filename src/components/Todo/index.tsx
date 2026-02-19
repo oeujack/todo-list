@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useState } from "react";
 import { ITask } from "../../Types";
 import * as Yup from "yup";
@@ -20,20 +19,20 @@ export default function Todo() {
     reopenTask,
     toggleTaskCompletion,
     updateTask,
-  } = useTask()
+  } = useTask();
 
-  const [count, setCount] = useState<number>(0)
-  const [isOpen, setIsOpen] = useState<boolean>(false)
-  const [selected, setSelected] = useState<ITask | null>(null)
+  const [count, setCount] = useState<number>(0);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [selected, setSelected] = useState<ITask | null>(null);
 
   function openModal(task: ITask) {
-    setSelected(task)
-    setIsOpen(true)
+    setSelected(task);
+    setIsOpen(true);
   }
 
   function closeModal() {
-    setIsOpen(false)
-    setSelected(null)
+    setIsOpen(false);
+    setSelected(null);
   }
 
   const validate = Yup.object({
@@ -41,36 +40,25 @@ export default function Todo() {
       .min(5, "* Quantidade mínima: 5")
       .max(35, "* Quantidade máxima: 35")
       .matches(
-        // eslint-disable-next-line no-useless-escape
-        /^[A-Za-zÀ-ú0-9\s\-]+$/,
+        /^[A-Za-zÀ-ú0-9\s-]+$/,
         "* Apenas letras e números são permitidos",
       )
       .required("")
       .trim()
-<<<<<<< HEAD
+
       .test("Tarefa já existe", "Tarefa já existe", function (value) {
         const lowerCaseValue = value.toLowerCase();
-=======
-      .test('Tarefa já existe', 'Tarefa já existe', function (value) {
-        const lowerCaseValue = value.toLowerCase()
->>>>>>> 2fb234050186e1a0402966c5d56a477645d9218e
+
         return !taskList
           ?.map((t) => t.task.toLowerCase())
-          .includes(lowerCaseValue)
+          .includes(lowerCaseValue);
       }),
-  })
+  });
 
-<<<<<<< HEAD
   // function clearAllTasks() {
   //   setCount(0);
   //   setTaskList([]);
   // }
-=======
-  function clearAllTasks() {
-    setCount(0)
-    setTaskList([])
-  }
->>>>>>> 2fb234050186e1a0402966c5d56a477645d9218e
 
   return (
     <>
@@ -87,21 +75,12 @@ export default function Todo() {
             </span>,
             {
               ...toastConfig,
-<<<<<<< HEAD
             },
           );
           actions.resetForm();
           addTask(values.nameTask);
           setCount(count + 1);
           actions.setSubmitting(false);
-=======
-            }
-          )
-          actions.resetForm()
-          addTask(values.nameTask)
-          setCount(count + 1)
-          actions.setSubmitting(false)
->>>>>>> 2fb234050186e1a0402966c5d56a477645d9218e
         }}
       >
         {({ ...formik }) => (
@@ -142,17 +121,13 @@ export default function Todo() {
                   className="nes-input"
                   value={formik.values.nameTask}
                   onChange={formik.handleChange}
-<<<<<<< HEAD
                   style={{ width: "100%", maxWidth: "400px" }}
-=======
-                  style={{ width: '100%', maxWidth: '400px' }}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      e.preventDefault()
-                      formik.handleSubmit()
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      formik.handleSubmit();
                     }
                   }}
->>>>>>> 2fb234050186e1a0402966c5d56a477645d9218e
                 />
                 <span className="nes-text is-error">
                   {formik.errors.nameTask}
@@ -311,5 +286,5 @@ export default function Todo() {
         />
       )}
     </>
-  )
+  );
 }
